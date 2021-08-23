@@ -1,0 +1,26 @@
+Index:    Name:                              Value:    ValueUnits:
+   1         kf_Rii_C__RiiP_C                   33        1/second
+   2         kf_RiiP_CxcAMP__RiiP_C_cAMP        0.496     1/(micromolarity*second)
+   3         kb_RiiP_CxcAMP__RiiP_C_cAMP        2.226     1/second
+   4         kf_RiiP_cAMPxC__RiiP_C_cAMP        0.0545    1/(micromolarity*second)
+   5         kb_RiiP_cAMPxC__RiiP_C_cAMP        0.156     1/second
+   6         kb_RiiPXcAMP__RiiP_cAMP            0.0016    1/second
+   7         kf_RiiPXcAMP__RiiP_cAMP            1         1/(micromolarity*second)
+   8         kf_RiiPxC__RiiP_C                  0.038     1/(micromolarity*second)
+   9         kb_RiiPxC__RiiP_C                  0.0026    1/second
+   10        kf_cAMPxRii__Rii_cAMP              0.15      1/(micromolarity*second)
+   11        kb_cAMPxRii__Rii_cAMP              0.0016    1/second
+   12        kf_Rii_CxcAMP__Rii_C_cAMP          0.496     1/(micromolarity*second)
+   13        kb_Rii_CxcAMP__Rii_C_cAMP          2.217     1/second
+   14        kf_RiixC__Rii_C                    2.1       1/(micromolarity*second)
+   15        kf_Rii_cAMPxC__Rii_C_cAMP          0.2984    1/(micromolarity*second)
+   16        kb_Rii_cAMPxC__Rii_C_cAMP          0.018     1/second
+   17        kf_Rii_C_cAMP__RiiP_C_cAMP         33        1/second
+   18        kf_RiiP_cAMP_CaN__CaNXRii_cAMP     2.6       1/second
+   19        kf_RiiPxCaN__RiiP_CaN              0.226     1/(micromolarity*second)
+   20        kb_RiiPxCaN__RiiP_CaN              20        1/second
+   21        kf_RiiP_CaN__RiixCaN               2.6       1/second
+   22        kf_CaNxRiiP_cAMP__RiiP_cAMP_CaN    0.226     1/(micromolarity*second)
+   23        kb_CaNxRiiP_cAMP__RiiP_cAMP_CaN    20        1/second
+   24        kb_RiixC__Rii_C                    0.0003    1/second
+   25        onemicromolar                      1         micromolarity
