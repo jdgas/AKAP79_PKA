@@ -13,7 +13,6 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
 
-#getMaxScore  <- function(xtarget, ytarget, xx, yy){ # rename: getScore; original Alexandra: getMaxScore
 getScore  <- function(ytarget, yy, ytarget_min, ytarget_max, ymin, ymax){
   distance <- 100
   yy_n <- (yy-ymin)/(ymax-ymin)
@@ -28,7 +27,6 @@ getScore  <- function(ytarget, yy, ytarget_min, ytarget_max, ymin, ymax){
     }
     distance <- distance / length(ytarget_n)
   }
-  #cat(sprintf("--DISTANCE %f \n", distance))
 
   distance
 }
