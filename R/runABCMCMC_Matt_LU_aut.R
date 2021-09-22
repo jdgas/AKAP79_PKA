@@ -11,9 +11,13 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU General Public License for more details.
 
+
+## Delete/Comment Working Directory specification if Running on a Cluster
 #setwd("C:/Users/Joao/Desktop/Paper SWE/Only Joao & Olivia/ABC - All cAMP levels")
 #setwd("/Users/olivia/Documents/Forskning/Programfiler/R/Only_Olivia_Joao/Automatized_code_v2/")
 
+
+## Load R Scripts and Libraries
 source('ScoringFunction_LU.R')
 source('LoadTargets_AKAP79.R')
 source('runModel_AKAP79.R')
@@ -26,13 +30,14 @@ library(ks)
 library(VineCopula)
 library(MASS)
 library(R.utils)
-library(R.matlab) #closeAllConnections()
+library(R.matlab) 
 library(stringr)
 
-# ## use if on a cluster, changes to be made in
-# ## copulaFunctions.R, preCalibration.R and in this file
+
+## Use if Running on a Cluster. Changes to be made in the following
+## scripts: copulaFunctions.R, preCalibration.R and in this script (runABCMCMC_Matt_LU_aut.R)
 library(doMC)
-registerDoMC(19) # example with 20 cores throughout
+registerDoMC(20) # example with 20 cores throughout
 getDoParWorkers()
 
 
@@ -40,11 +45,11 @@ getDoParWorkers()
 matdata_Parms <<- read.table("pkaParms_Restri.txt", header = TRUE);
 parNames = matdata_Parms$Name.;
 parVal = matdata_Parms$Value.;
-R_Amount = 6.93 #OE: Is this used? If not remove
+R_Amount = 6.93 # Use to calculate the species' amount (variable species_iconc_TS)
 
-#Experiments to run
+
+# Indexes of Experiments to Run
 exp_idxs<-c(7, 13, 19, 22, 8, 14, 20, 23, 9, 15, 21, 24)
-
 # 7: 0 No_CaN
 # 8: 0 With_CaN
 # 9: 0 CaN_AKAP
@@ -64,55 +69,49 @@ exp_idxs<-c(7, 13, 19, 22, 8, 14, 20, 23, 9, 15, 21, 24)
 # 23:2 With_CaN *
 # 24:2 CaN_AKAP *
 
-#Input values for the different experiments
+
+# Input (cAMP) Values for Each Experimental Setting 
 xAll <- c(-1,-1, -1,-1,-1,-1, 0, 0, 0, 0.1, 0.1, 0.1, 0.2, 0.2, 0.2, 0.5, 0.5, 0.5, 1, 1, 1, 2, 2, 2)
 
-#Exp type
-exp_types<-c("","","","","","","SS_No_CaN", "SS_with_CaN", "SS_CaN_AKAP","SS_No_CaN", "SS_with_CaN", "SS_CaN_AKAP","SS_No_CaN", "SS_with_CaN", "SS_CaN_AKAP","SS_No_CaN", "SS_with_CaN", "SS_CaN_AKAP","SS_No_CaN", "SS_with_CaN", "SS_CaN_AKAP","SS_No_CaN", "SS_with_CaN", "SS_CaN_AKAP")
+
+# Exp type
+exp_types<-c("","","","","","","SS_No_CaN", "SS_with_CaN", "SS_CaN_AKAP","SS_No_CaN", "SS_with_CaN", "SS_CaN_AKAP","SS_No_CaN", "SS_with_CaN", "SS_CaN_AKAP",
+                               "SS_No_CaN", "SS_with_CaN", "SS_CaN_AKAP","SS_No_CaN", "SS_with_CaN", "SS_CaN_AKAP","SS_No_CaN", "SS_with_CaN", "SS_CaN_AKAP")
 #OE: remove SS in exp_types
 
 
 
-
-#Initial conditions
+# Define Initial Concentration/Amount of Each Specie
 species_iconc_TS <- c(Rii = 6.3, cAMP = 0, RiiP = 0, Rii_C = 0.63,RiiP_cAMP = 0,RiiP_C = 0,RiiP_C_cAMP = 0,C = 0,
                       Rii_cAMP = 0,Rii_C_cAMP = 0, Total_RII = R_Amount, CaN = 1.5, RiiP_CaN = 0, RiiP_cAMP_CaN  = 0,Total_C = 0.63, cycle_Rii = 0,
                       Cycle_RiiP = 0,Thr_unphos_Rii  = 1,Thr_phos_Rii = 1, b_AKAP = 0, AKAR4 = 0.2, AKAR4_C = 0, AKAR4p = 0);#, p_AKAP = 0); #Total C should be removed?
 
-#OE: Remove the ones below because they are not used
-species_iconc_CC <- c(Rii =0, cAMP = 0, RiiP = 0, Rii_C = 0, RiiP_cAMP = 0,RiiP_C = 0,RiiP_C_cAMP = 0,C = 0,
-                      Rii_cAMP = 0,Rii_C_cAMP = 0, Total_RII = R_Amount, CaN = 0, RiiP_CaN = 0, RiiP_cAMP_CaN  = 0, Total_C = 0.63, cycle_Rii = 0,
-                      Cycle_RiiP = 0,Thr_unphos_Rii  = 0,Thr_phos_Rii = 0, b_AKAP = 0, AKAR4 = 0.2, AKAR4_C = 0, AKAR4p = 0, p_AKAP = 0);
-
-species_iconc_MutA <- c(Rii = 6.3, cAMP = 1, RiiP = 0, Rii_C = 0.63,RiiP_cAMP = 0,RiiP_C = 0,RiiP_C_cAMP = 0,C = 0,
-                        Rii_cAMP = 0,Rii_C_cAMP = 0, Total_RII = R_Amount, CaN = 0, RiiP_CaN = 0, RiiP_cAMP_CaN  = 0, Total_C = 0.63, cycle_Rii = 0,
-                        Cycle_RiiP = 0,Thr_unphos_Rii  = 1,Thr_phos_Rii = 1, b_AKAP = 0, AKAR4 = 0.2, AKAR4_C = 0, AKAR4p = 0, p_AKAP = 0);
-
-species_iconc_MutE <- c(Rii = 0, cAMP = 1, RiiP = 6.3, Rii_C = 0,RiiP_cAMP = 0,RiiP_C = 0.63,RiiP_C_cAMP = 0,C = 0,
-                        Rii_cAMP = 0,Rii_C_cAMP = 0, Total_RII = R_Amount, CaN = 0, RiiP_CaN = 0, RiiP_cAMP_CaN  = 0, Total_C = 0.63, cycle_Rii = 0,
-                        Cycle_RiiP = 0,Thr_unphos_Rii  = 1,Thr_phos_Rii = 1, b_AKAP = 0, AKAR4 = 0.2, AKAR4_C = 0, AKAR4p = 0, p_AKAP = 0);
 
 
 # Set ll and up for standard parameters
 scale <- 1000
 
-#Clean up below and change to correct values
+
+#Define Lower and Upper Limits for which the Parameters will be Allowed to Vary 
 ll = c( parVal[1:6]/scale, parVal[7]/scale, parVal[8:9]/scale, parVal[10]/scale, parVal[11:20]/scale, parVal[21]/1.9, parVal[22:24]/scale,  parVal[25:26]/1.25, parVal[27]/1.25,  parVal[28:29]/1.5,  parVal[30]/2);
 ul = c( parVal[1:6]*scale, parVal[7]*scale, parVal[8:9]*scale, parVal[10]*scale, parVal[11:20]*scale, parVal[21]*1.9, parVal[22:24]*scale,  parVal[25:26]*1.25, parVal[27]*1.25,  parVal[28:29]*1.5,  parVal[30]*2);
 
 
-
+#Transform ll ul to a Logarithmic Scale
 ll = log10(ll);
 ul = log10(ul);
 
 
+#Indexes of Parameters Used
 parIdx <- c(1:30); 
 
-# load targets
+
+# Load Experimental Values
 out <- loadTargets_TSCC()
 xtarget <- out$xtarget
 ytarget <- out$ytarget
 rm(out)
+
 
 ytarget_min<-0 #Zero phosphorylation
 ytarget_max<-0.2 #Full phosphorylation
@@ -120,33 +119,34 @@ yy_min<-0 #Zero phosphorylation
 yy_max<-0.2  #Full phosphorylation
 
 
-# no of samples
-
+# Define Number of Samples for the Precalibration (npc) and each ABC-MCMC chain (ns)
 ns <- 1000 # no of samples required from each ABC-MCMC chain #WAS 1000
 npc <- 50000 # pre-calibration  WAS 50.000
 
 
-# settings
-p <- 0.01 # was 0.01 #OE: Why was this changed?
-#nChains <- 1 #was 20
-#delta <- 0.01 #was 0.1
+# Define ABC-MCMC Settings
+p <- 0.01 # For the Pre-Calibration: Choose Top 1% Samples with Shortest Distance to the Experimental Values
+nChains <- 20 # For the ABC-MCMC Process: Nr of Parallel Chains; 
+#delta <- 0.01 #JA: Which one to be used: Single or Multiple delta Values?
 delta <- c(-1,-1, -1,-1,-1,-1, 0.011, 0.011, 0.011, 0.011, 0.011, 0.011, 0.011, 0.011, 0.011, 0.011, 0.011, 0.011, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01)
-delta <- delta
-nChains <- 19 #was 20
 
+
+# For Reproducibility of the ABC-MCMC Findings
 set.seed(7619201)
 
 
+# Loop through the Different Experimental Settings
 for (i in 1:length(exp_idxs)) {
   
   exp_idx=exp_idxs[i]
   cat(sprintf("#####Starting run for Exp. Dataset %i #####\n", exp_idx))
   
   
- 
+  ## If First Experimental Setting, Create an Independente Colupla
   if(i==1){
     cat(sprintf("-Fitting independent Copula \n"))
     out <- makeIndepCopula_JA(ll, ul)
+  ## Otherwise, Take Copula from the Previous Exp Setting and Use as a Prior
   } else {
     cat(sprintf("-Fitting Copula based on previous MCMC runs\n"))
     out <- fitCopula(draws, ll, ul, nChains)
@@ -156,6 +156,7 @@ for (i in 1:length(exp_idxs)) {
   Z <- out$Z
   Y <- out$Y
   
+  ## Run Pre-Calibration Sampling
   cat(sprintf("-Precalibration \n"))
   if (exp_idx >=7 & exp_idx <= 24) {
     out1 <- preCalibration(xAll[[exp_idx]], parIdx, parVal, xtarget[[exp_idx]], ytarget[[exp_idx]],ytarget_min, ytarget_max, yy_min, yy_max, npc, U, Z, copula, exp_types[exp_idx], species_iconc_TS, "T_S", nChains);
@@ -165,12 +166,14 @@ for (i in 1:length(exp_idxs)) {
   }
   sfactor <- 0.1 # scaling factor #OE: What was this?
 
-  # Get Starting Parameters
+  ## Get Starting Parameters from Pre-Calibration
   out2 <- getMCMCPar(out1$prePar, out1$preDelta, p, sfactor, delta[exp_idx], nChains)
   Sigma <- out2$Sigma
   startPar <- out2$startPar
   
+  ## Run ABC-MCMC Sampling
   cat(sprintf("-Running MCMC chains \n"))
+  # If Running on a Cluster use #177, otherwise #178
   draws <- mclapply(1:nChains, function(k) ABCMCMC(xAll[exp_idx], parIdx, parVal, ns, xtarget[[exp_idx]], ytarget[[exp_idx]], ytarget_min, ytarget_max, yy_min, yy_max, startPar[k,], Sigma, delta[exp_idx], U, Z, Y, copula, exp_types[exp_idx], ll, ul, species_iconc_TS, "T_S"), mc.preschedule = FALSE, mc.cores = nChains );
   #draws <- lapply(1:nChains, function(k) ABCMCMC(xAll[exp_idx], parIdx, parVal, ns, xtarget[[exp_idx]], ytarget[[exp_idx]], ytarget_min, ytarget_max, yy_min, yy_max, startPar[k,], Sigma, delta[exp_idx], U, Z, Y, copula, exp_types[exp_idx], ll, ul, species_iconc_TS, "T_S"));
   
@@ -179,7 +182,6 @@ for (i in 1:length(exp_idxs)) {
   pick <- !apply(draws, 1, function(rw) all(rw==0))
   draws <- draws[pick,]
  
-
   for(j in 1:i){
     filt_idx=exp_idxs[j]
     cat(sprintf("-Checking fit with dataset %i \n", exp_idxs[j]))
@@ -193,11 +195,12 @@ for (i in 1:length(exp_idxs)) {
     nonFits=n1-n2;
     cat(sprintf("-- %i samples of posterior after dataset %i did notfit dataset %i \n",nonFits,exp_idx, filt_idx))
   }
+                 
+  # Save Resulting Samples to MATLAB and R files.
   cat(sprintf("-Saving sample \n"))
   outFile=paste(exp_idxs[1:i], collapse="-")
   outFileR=paste0("DrawsNoThermoScale1000_",outFile,".RData",collapse="_")
   outFileM=paste0("DrawsNoThermoScale1000_",outFile,".mat",collapse="_")
-  
   save(draws, parNames, file=outFileR)
   writeMat(outFileM, samples=10^draws)
   
