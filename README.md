@@ -17,9 +17,9 @@ applied to dynamical intracellular pathway models." Bioinformatics 35, no. 2 (20
 and the corresponding code repository:
 https://github.com/alexjau/uqsa
 
-This repository contains the following subfolders:
+This repository is under construction and will contain the following subfolders:
 - **Experimental data**, the experimental wilde type data used for model calibration as well as the experimental data from the mutation experiments.
-- **Models**, the small and extended model in Matlabs Simbiology format. Five different parameter sets that fit data are included. 
+- **Models**, the small and extended model in Matlabs Simbiology format. Five different parameter sets that fit data will be included. 
 - **Posterior distribution**, the sampled parameter set fitting the experimental data.
 - **Supplementary figures**, i) modelling of responses at different cAMP levels ii) illustration of five different parameter sets.
 - **UQ-AKAP79**, the modified ABC code for the AKAP79-PKA model in R.
