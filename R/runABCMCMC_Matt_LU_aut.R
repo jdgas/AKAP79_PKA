@@ -37,7 +37,7 @@ library(stringr)
 ## Use if Running on a Cluster. Changes to be made in the following
 ## scripts: copulaFunctions.R, preCalibration.R and in this script (runABCMCMC_Matt_LU_aut.R)
 library(doMC)
-registerDoMC(20) # example with 20 cores throughout
+registerDoMC(19) # example with 19 cores throughout
 getDoParWorkers()
 
 
@@ -45,7 +45,6 @@ getDoParWorkers()
 matdata_Parms <<- read.table("pkaParms_Restri.txt", header = TRUE);
 parNames = matdata_Parms$Name.;
 parVal = matdata_Parms$Value.;
-R_Amount = 6.93 # Use to calculate the species' amount (variable species_iconc_TS)
 
 
 # Indexes of Experiments to Run
@@ -82,6 +81,7 @@ exp_types<-c("","","","","","","SS_No_CaN", "SS_with_CaN", "SS_CaN_AKAP","SS_No_
 
 
 # Define Initial Concentration/Amount of Each Specie
+R_Amount = 6.93 # Use to calculate the species' amount 
 species_iconc_TS <- c(Rii = 6.3, cAMP = 0, RiiP = 0, Rii_C = 0.63,RiiP_cAMP = 0,RiiP_C = 0,RiiP_C_cAMP = 0,C = 0,
                       Rii_cAMP = 0,Rii_C_cAMP = 0, Total_RII = R_Amount, CaN = 1.5, RiiP_CaN = 0, RiiP_cAMP_CaN  = 0,Total_C = 0.63, cycle_Rii = 0,
                       Cycle_RiiP = 0,Thr_unphos_Rii  = 1,Thr_phos_Rii = 1, b_AKAP = 0, AKAR4 = 0.2, AKAR4_C = 0, AKAR4p = 0);#, p_AKAP = 0); #Total C should be removed?
@@ -126,8 +126,7 @@ npc <- 50000 # pre-calibration  WAS 50.000
 
 # Define ABC-MCMC Settings
 p <- 0.01 # For the Pre-Calibration: Choose Top 1% Samples with Shortest Distance to the Experimental Values
-nChains <- 20 # For the ABC-MCMC Process: Nr of Parallel Chains; 
-#delta <- 0.01 #JA: Which one to be used: Single or Multiple delta Values?
+nChains <- 19 # For the ABC-MCMC Process: Nr of Parallel Chains; 
 delta <- c(-1,-1, -1,-1,-1,-1, 0.011, 0.011, 0.011, 0.011, 0.011, 0.011, 0.011, 0.011, 0.011, 0.011, 0.011, 0.011, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01)
 
 
