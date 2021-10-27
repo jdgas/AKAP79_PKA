@@ -108,7 +108,7 @@ PKAModel <- function(t, state, parameters) {
   reaction_1 = kf_C_AKAR4*C*AKAR4 - kb_C_AKAR4*AKAR4_C
   reaction_2 = kcat_AKARp*AKAR4_C
   
-  #Change concentration of species throughout time
+  #Change concentration of species 
   vf_ <- vector(len = 23)
   vf_[1] = (-reaction_78 - reaction_58 + reaction_48)
   vf_[2] = (-reaction_12 - reaction_43 - reaction_78 - reaction_56)
