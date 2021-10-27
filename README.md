@@ -1,6 +1,6 @@
 # Aproximate Bayesian Computing (ABC) for parameter estimation in the AKAP79-PKA model
 
-This repository contains source code to the publication
+This repository (https://github.com/jdgas/AKAP79_PKA) contains source code to the publication
 ```
 Church, Timothy W., Parul Tewatia, Saad Hannan, João Antunes, Olivia Eriksson, Trevor G. Smart, 
 Jeanette Hellgren Kotaleski, and Matthew Gold. "AKAP79 enables calcineurin to directly suppress 
