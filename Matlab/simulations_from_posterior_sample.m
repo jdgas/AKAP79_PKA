@@ -16,10 +16,10 @@ function out=simulations_from_posterior_sample(nIt,post_file, sims_file,const_fl
 
 %sims_file:name of file where to store simulation data.
 %post_file: file with the posterior parameter distribution
+
+
 out=0; 
 AKARtot=0.2;
-%data=load('../posterior_distribution_sample/paramSetsTher_delta05.mat');
-%data=load('Params_TS_CC_045_Final.mat'); %load posterior parameter sample
 data=load(post_file);
 S=sbioloadproject('../models/PKA_insee_05_06_20_AKAR');  %load model
 modelobj = S.m1;
@@ -42,9 +42,6 @@ set(configsetObj.SolverOptions, 'RelativeTolerance', 1.0e-8);
 set(configsetObj, 'MaximumWallClock', 300)
 set(configsetObj.RuntimeOptions, 'StatesToLog', 'all');
 nSpecs=length(configsetObj.RuntimeOptions.StatesToLog);
-
-%offParIdx=[1:17 18:20 18:20 24 31 25:27];
-%onParIdx=[1:17 21:23 21:23 24 31 25:27 ];
 
 offParIdx=[1:16 1 18:20 18:20 24 31 25:27];
 onParIdx=[1:16 1 21:23 21:23 24 31 25:27];
