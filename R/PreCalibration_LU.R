@@ -1,5 +1,7 @@
 # Uncertainty Quantification: Precalibration for ABC-MCMC
 # Copyright (C) 2018 Alexandra Jauhiainen (alexandra.jauhiainen@gmail.com)
+# Modified slightly 2021 by Joao Antunes (joaodgantunes@gmail.com) and Olivia Eriksson (olivia@kth.se)
+
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,7 +25,6 @@ preCalibration <- function(input, parIdx, parDef, xtarget, ytarget, ytarget_min,
   fun <- function(i) {
     tpar <- prePar[i,]
     invisible(capture.output(out <- withTimeout(runModel(tpar, parIdx, parDef, input, rInd, amounts, datatype), timeout=25, onTimeout="silent"))) #simulates runModel for npc samples
-    #tmp <- ifelse(is.null(out), NA, getMaxScore(xtarget, ytarget, out$xx, out$yy)) #Evaluates how "far" the simulated data is from the exp. dataset
     tmp <- ifelse(is.null(out), NA, getScore(ytarget, out$yy, ytarget_min, ytarget_max, yy_min, yy_max)) #Evaluates how "far" the simulated data is from the exp. dataset
     return(tmp)
   }

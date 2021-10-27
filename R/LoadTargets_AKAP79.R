@@ -1,7 +1,18 @@
+# Load targets
+# Copyright (C) 2021 by Joao Antunes (joaodgantunes@gmail.com) 
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+
+
 loadTargets_TSCC <- function(){
-  
-  
-  #setwd("C:/Users/Joao/Desktop/Paper SWE/Only Joao & Olivia/ABC - All cAMP levels/Targets")
   #browser()
   
   xtarget <- list()
@@ -191,47 +202,6 @@ loadTargets_TSCC <- function(){
   xtarget[[24]] <- H[,1]
   ytarget[[24]] <- H[,4]; 
   
-  
-  
-  
-  # #### Read txt fileS for Mutation Data ####
-  # I <- read.csv('Targets/Mut1.txt', sep='\t') # 98A
-  # # Normalize data with constant 1.08
-  # #I[,c(2:4)] = I[,c(2:4)] / 1.08
-  # 
-  # # Normalize data and re-assign it to 'C'
-  # First = ((I$WTCaN - 100) / ( 171.67 - 100)) * 0.2  ;
-  # Second = ((I$WTalone - 100 ) / ( 171.67 - 100 )) * 0.2  ;
-  # Third = ((I$NEACaN - 100 ) / ( 171.67 - 100 )) * 0.2  ;
-  # normAKAR = cbind(I$Time, First, Second, Third);
-  # colnames(normAKAR) = c("Time", "WTCaN", "WTalone", "NEACaN");
-  # I = as.data.frame(normAKAR);
-  # 
-  # xtarget[[25]] <- I[,1]
-  # ytarget[[25]] <- I[,2]; 
-  # xtarget[[26]] <- I[,1]
-  # ytarget[[26]] <- I[,3]; 
-  # xtarget[[27]] <- I[,1]
-  # ytarget[[27]] <- I[,4]; 
-  # 
-  # 
-  # 
-  # 
-  # J <- read.csv('Targets/Mut2.txt', sep='\t') # 98E
-  # # Normalize data with constant 1.08
-  # #J[,c(2:3)] = J[,c(2:3)] / 1.08
-  # # Normalize data and re-assign it to 'C'
-  # First = ((J$EplusCaN - 100) / ( 171.67 - 100)) * 0.2  ;
-  # Second = ((J$Ealone - 100 ) / ( 171.67 - 100 )) * 0.2  ;
-  # normAKAR = cbind(J$Time, First, Second);
-  # colnames(normAKAR) = c("Time", "EplusCaN", "Ealone");
-  # J = as.data.frame(normAKAR);
-  # 
-  # xtarget[[28]] <- J[,1]
-  # ytarget[[28]] <- J[,2]; 
-  # xtarget[[29]] <- J[,1]
-  # ytarget[[29]] <- J[,3]; 
-  # 
   
   return(list(xtarget=xtarget, ytarget=ytarget))
   

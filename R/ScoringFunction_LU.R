@@ -1,7 +1,6 @@
-# Uncertainty Quantification: Distance criterion
-# Copyright (C) 2018 
-# Alexandra Jauhiainen (alexandra.jauhiainen@gmail.com)
-# Olivia Eriksson
+# Uncertainty Quantification: Scoring function
+# Copyright (C) 2021 Alexandra Jauhiainen (alexandra.jauhiainen@gmail.com)
+# Joao Antunes (joaodgantunes@gmail.com) and Olivia Eriksson (olivia@kth.se)
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,7 +19,7 @@ getScore  <- function(ytarget, yy, ytarget_min, ytarget_max, ymin, ymax){
   
   if (!(all(yy==0, na.rm=T) | any(yy<0, na.rm=T)| any(is.na(yy))| any(yy>120))){
     distance <- 0
-    # sumSqError
+    
     for (j in 1:length(ytarget)){
       sigma <- 1
       distance <- distance + ((yy_n[j]-ytarget_n[j])/sigma)^2

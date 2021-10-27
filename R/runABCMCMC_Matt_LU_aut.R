@@ -1,5 +1,6 @@
 # Uncertainty Quantification: Running ABC-MCMC with copulas
 # Copyright (C) 2018 Alexandra Jauhiainen (alexandra.jauhiainen@gmail.com)
+# Modified 2021 by Joao Antunes (joaodgantunes@gmail.com) and Olivia Eriksson (olivia@kth.se)
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -12,9 +13,9 @@
 # GNU General Public License for more details.
 
 
-## Delete/Comment Working Directory specification if Running on a Cluster
+## Delete/Comment Working Directory specification
+#setwd("/Users/olivia/GitHub/AKAP79_PKA")
 #setwd("C:/Users/Joao/Desktop/Paper SWE/Only Joao & Olivia/ABC - All cAMP levels")
-#setwd("/Users/olivia/Documents/Forskning/Programfiler/R/Only_Olivia_Joao/Automatized_code_v2/")
 
 
 ## Load R Scripts and Libraries
@@ -76,7 +77,7 @@ xAll <- c(-1,-1, -1,-1,-1,-1, 0, 0, 0, 0.1, 0.1, 0.1, 0.2, 0.2, 0.2, 0.5, 0.5, 0
 # Exp type
 exp_types<-c("","","","","","","SS_No_CaN", "SS_with_CaN", "SS_CaN_AKAP","SS_No_CaN", "SS_with_CaN", "SS_CaN_AKAP","SS_No_CaN", "SS_with_CaN", "SS_CaN_AKAP",
                                "SS_No_CaN", "SS_with_CaN", "SS_CaN_AKAP","SS_No_CaN", "SS_with_CaN", "SS_CaN_AKAP","SS_No_CaN", "SS_with_CaN", "SS_CaN_AKAP")
-#OE: remove SS in exp_types
+
 
 
 
@@ -84,7 +85,7 @@ exp_types<-c("","","","","","","SS_No_CaN", "SS_with_CaN", "SS_CaN_AKAP","SS_No_
 R_Amount = 6.93 # Use to calculate the species' amount 
 species_iconc_TS <- c(Rii = 6.3, cAMP = 0, RiiP = 0, Rii_C = 0.63,RiiP_cAMP = 0,RiiP_C = 0,RiiP_C_cAMP = 0,C = 0,
                       Rii_cAMP = 0,Rii_C_cAMP = 0, Total_RII = R_Amount, CaN = 1.5, RiiP_CaN = 0, RiiP_cAMP_CaN  = 0,Total_C = 0.63, cycle_Rii = 0,
-                      Cycle_RiiP = 0,Thr_unphos_Rii  = 1,Thr_phos_Rii = 1, b_AKAP = 0, AKAR4 = 0.2, AKAR4_C = 0, AKAR4p = 0);#, p_AKAP = 0); #Total C should be removed?
+                      Cycle_RiiP = 0,Thr_unphos_Rii  = 1,Thr_phos_Rii = 1, b_AKAP = 0, AKAR4 = 0.2, AKAR4_C = 0, AKAR4p = 0);
 
 
 
@@ -163,7 +164,7 @@ for (i in 1:length(exp_idxs)) {
   else {
     cat(sprintf("OBS:Index %i is not an experiment (yet)\n", exp_idx))
   }
-  sfactor <- 0.1 # scaling factor #OE: What was this?
+  sfactor <- 0.1 # scaling factor 
 
   ## Get Starting Parameters from Pre-Calibration
   out2 <- getMCMCPar(out1$prePar, out1$preDelta, p, sfactor, delta[exp_idx], nChains)
@@ -172,8 +173,9 @@ for (i in 1:length(exp_idxs)) {
   
   ## Run ABC-MCMC Sampling
   cat(sprintf("-Running MCMC chains \n"))
-  # If Running on a Cluster use #177, otherwise #178
+  # If Running on a Cluster 
   draws <- mclapply(1:nChains, function(k) ABCMCMC(xAll[exp_idx], parIdx, parVal, ns, xtarget[[exp_idx]], ytarget[[exp_idx]], ytarget_min, ytarget_max, yy_min, yy_max, startPar[k,], Sigma, delta[exp_idx], U, Z, Y, copula, exp_types[exp_idx], ll, ul, species_iconc_TS, "T_S"), mc.preschedule = FALSE, mc.cores = nChains );
+  # Otherwise 
   #draws <- lapply(1:nChains, function(k) ABCMCMC(xAll[exp_idx], parIdx, parVal, ns, xtarget[[exp_idx]], ytarget[[exp_idx]], ytarget_min, ytarget_max, yy_min, yy_max, startPar[k,], Sigma, delta[exp_idx], U, Z, Y, copula, exp_types[exp_idx], ll, ul, species_iconc_TS, "T_S"));
   
   # put together
@@ -186,7 +188,6 @@ for (i in 1:length(exp_idxs)) {
     cat(sprintf("-Checking fit with dataset %i \n", exp_idxs[j]))
     pick <- apply(draws,1, function(u){out <- runModel(u, parIdx = parIdx, parDef = parVal, input = xAll[filt_idx], 
                                                      rInd = exp_types[filt_idx], species_iconc_TS, "T_S");
-                #getMaxScore(xtarget[[filt_idx]], ytarget[[filt_idx]], out$xx, out$yy)}) <= delta[filt_idx]
                  getScore(ytarget[[filt_idx]], out$yy, ytarget_min, ytarget_max, yy_min, yy_max)}) <= delta[filt_idx]
     n1=nrow(draws)
     draws <- draws[pick,];

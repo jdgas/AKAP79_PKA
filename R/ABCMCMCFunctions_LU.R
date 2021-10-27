@@ -1,5 +1,6 @@
 # Uncertainty Quantification: ABC-MCMC with copulas
 # Copyright (C) 2018 Alexandra Jauhiainen (alexandra.jauhiainen@gmail.com)
+# Modified slightly 2021 by Joao Antunes (joaodgantunes@gmail.com) and Olivia Eriksson (olivia@kth.se)
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,8 +24,8 @@ ABCMCMC <- function(input, parIdx, parDef, nSims, xtarget,ytarget, ytarget_min, 
   #browser()
   invisible(capture.output(out <- runModel(curPar, parIdx, parDef, input, rInd, amounts, datatype))) #generate simulated data with model params
   #browser()
-  #curDelta <- getMaxScore(xtarget, ytarget, out$xx, out$yy) #get current delta distance
-  curDelta <-getScore(ytarget, out$yy, ytarget_min, ytarget_max, yy_min, yy_max)
+  
+  curDelta <-getScore(ytarget, out$yy, ytarget_min, ytarget_max, yy_min, yy_max)  #get current delta distance
   curPrior <- dprior(curPar, U, Z, Y, copula, ll, ul)
  
   draws <- matrix(0, nSims,np)
@@ -89,7 +90,7 @@ parUpdate <- function(input, parDef, curPar, canPar, curDelta, curPrior, xtarg, 
     canDelta <- Inf
     canPrior <- 0
   }else{  	
-    #canDelta <- getMaxScore(xtarg, ytarg, out$xx, out$yy)
+   
     canDelta <- getScore(ytarg, out$yy, ytarget_min, ytarget_max, yy_min, yy_max)
    
     canPrior <- dprior(canPar, U, Z, Y, copula, ll, ul)

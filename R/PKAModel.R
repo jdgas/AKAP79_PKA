@@ -1,4 +1,15 @@
+# R implementation of AKAP79-PKA model
+# Copyright (C) 2021 Joao Antunes (joaodgantunes@gmail.com) and Olivia Eriksson (olivia@kth.se)
 
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
 PKAModel <- function(t, state, parameters) {
 
   # Species
@@ -61,7 +72,7 @@ PKAModel <- function(t, state, parameters) {
   
   
   # These KDs are changed depending on 'b_AKAP' value: if b_AKAP = 1 -> signal AKAPon; otherwise -> signal AKAPoff
-  # Sidenote: b_AKAP is a specie (added by João in R) whose purpose is solely to indicate if simulation is to be run in AKAPon (1) or AKAPoff (0)
+  # Sidenote: b_AKAP is a specie (added by Jo?o in R) whose purpose is solely to indicate if simulation is to be run in AKAPon (1) or AKAPoff (0)
   kf_RiiP_cAMP_CaN__CaNXRii_cAMP = b_AKAP*AKAPon_1  +  (1 - b_AKAP)*kf_RiiP_cAMP_CaN__CaNXRii_cAMP;
   kf_RiiPxCaN__RiiP_CaN = b_AKAP*AKAPon_2  +  (1 - b_AKAP)*kf_RiiPxCaN__RiiP_CaN;
   kb_RiiPxCaN__RiiP_CaN = b_AKAP*AKAPon_3  +  (1 - b_AKAP)*kb_RiiPxCaN__RiiP_CaN;

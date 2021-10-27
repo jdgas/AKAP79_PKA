@@ -1,5 +1,16 @@
+# plot_sims2
+# Copyright (C) 2021 by Joao Antunes (joaodgantunes@gmail.com) 
 
-#load("/Users/olivia/Documents/Forskning/Programfiler/R/Only_Olivia_Joao/Automatized_code_v2/DrawsNoThermoScale1000_7-13-19-22.RData")
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+
 #plot_draws=draws
 data=readMat('DrawsNoThermoScale1000_7-13-19-22-8-14-20-23-9-15-21-24_large_joao_subm_prior.mat');
 plot_draws=log10(data$samples)
