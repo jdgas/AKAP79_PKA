@@ -1,27 +1,9 @@
 function out=plot_sims(post_file,sims_file)
-%clear all;
-
-%post_file='DrawsNoThermoScale1000_7-13-19-22-8-14-20-23-9-15-21-24_k43_k87_changed.mat';
-%sims_file='SIM_DrawsNoThermoScale1000_7-13-19-22-8-14-20-23-9-15-21-24_k43_k87_changed.mat';
-%post_file='../ABCruns/Automatized_code_v2_small_free_k43_k87/DrawsNoThermoScale1000_7-13-19-22-8-14-20-23-9-15-21-24_k43_k87';
-%sims_file='../ABCruns/Automatized_code_v2_small_free_k43_k87/DrawsNoThermoScale1000_7-13-19-22-8-14-20-23-9-15-21-24_k43_k87_SIM';
-%post_file='../ABCruns/Automatized_code_v2_small_const/DrawsNoThermoScale1000_7-13-19-22-8-14-20-23-9-15-21-24';
-%sims_file='../ABCruns/Automatized_code_v2_small_const/DrawsNoThermoScale1000_7-13-19-22-8-14-20-23-9-15-21-24_SIM';
-%post_file='../ABCruns/Automatized_code_v2_large_free_k43_k87/DrawsNoThermoScale1000_7-13-19-22-8-14-20-23';
-%post_file='../ABCruns/Automatized_code_v2_large_free_k43_k87/DrawsNoThermoScale1000_7-13-19-22-8-14-20-23-9-15-21-24';
-%sims_file='../ABCruns/Automatized_code_v2_large_free_k43_k87/DrawsNoThermoScale1000_7-13-19-22-8-14-20-23-9-15-21-24_SIM';
-
-
-
-
 
 close all;
 SIM_MAX=0.2;
 const_flag=0;
 scale=1000;
-
-
-
 
 nWT=18;%Number of WT experiments
 nMut=6;%Number of mutation experiments
@@ -68,21 +50,13 @@ for i=1:(nWT+nMut)
 end
 
  %%%%Calculate scores
- 
  scores = get_scores(Y_sims_n,Y_exp_n, 0, 1, 0, 1, nWT,nMut);
 
 
-%Classify
-
-%class_all=1:nIt;
-%class_WT=find(sum(scores(1:12,:))./12<0.004);
-%class_WT=class_all;
-%class_WT=find(sum(scores(1:12,:))./12<0.01);
-
+%%%%%Classify
 class_WT=false(1,nIt);
 for j=1:nIt
-     %class_WT(j)=all(scores(1:18,j)<0.008);
-     class_WT(j)=all(scores(1:18,j)<10);
+     class_WT(j)=all(scores(1:18,j)<10); %The full posterior is kept (threshold from ABC used)
 end
 
 
@@ -93,19 +67,6 @@ end
 
 
 class_muts_bad=and(~class_muts_good,class_WT);
-
-
-%class_muts=find(sum(scores(19:24,:))./6<0.006);
-
-%class_muts=class;
-
-
-%scoresWT=sum(scores(1:24,:))./24;
-
-
-%class_non_WT=setdiff(class_all, class_WT);
-%class_muts_good=intersect(class_WT,class_muts);
-%class_muts_bad=setdiff(class_WT, class_muts_good);
 
 
 %Form KD parameters
@@ -166,8 +127,6 @@ for i=1:3
     p1=plot(t, y_sims(class,:),'linewidth',0.1,'Color',[160 160 160]./255);
     hold on
     p2=plot(t, y_exp, 'ko','MarkerFaceColor',clrs(i,:),'MarkerEdgeColor',clrs(i,:));
-    %hold on
-    %plot(t, mean(y_sims(class,:)), 'k--','LineWidth',3);
     ylim([1 1.8])
     xlim([0 605])
     title(data_names2{exp_indx(i)});
@@ -195,8 +154,6 @@ for i=1:3
     p1=plot(t, y_sims(class,:),'linewidth',0.1,'Color',[160 160 160]./255);
     hold on
     p2=plot(t, y_exp, 'ko','MarkerFaceColor',clrs(i,:),'MarkerEdgeColor',clrs(i,:));
-    %hold on
-    %plot(t, mean(y_sims(class,:)), 'k--','LineWidth',3);
     ylim([1 1.8])
     xlim([0 605])
     title(data_names2{exp_indx(i)});
@@ -323,11 +280,6 @@ scatter(log10(Kd(class_muts_bad,Kd_idx(i))),log10(Kd(class_muts_bad,Kd_idx(j))),
 hold on;
 scatter(log10(Kd(class_muts_good,Kd_idx(i))),log10(Kd(class_muts_good,Kd_idx(j))),'b','filled','MarkerFaceAlpha',mv,'MarkerEdgeAlpha',mv)
 legend({'Far away';'Close to data';});
-% x=1:0.1:100;
-%        y=x/12-0.7;
-%        plot(x,y,'-','LineWidth',2);
-%         
-%axis([0 2.5 -2.5 0.5]);
 
 xlabel(strcat('log10(',KdNames(Kd_idx(i)),')'),'Interpreter','None');
 ylabel(strcat('log10(',KdNames(Kd_idx(j)),')'),'Interpreter','None');
@@ -344,10 +296,7 @@ ylabel(strcat('log10(',KdNames(Kd_idx(j)),')'),'Interpreter','None');
 
 class_muts_bad_red=class_muts_bad(1:10:end); %reduce number of lines that are plotted (otherwise it takes to long time to plot)
 class_muts_good_red=class_muts_good(1:1:end);
-%class_muts_bad_red=class_muts_bad(1:1:end); %reduce number of lines that are plotted (otherwise it takes to long time to plot)
-%class_muts_good_red=class_muts_good(1:1:end);
 
-%exp_idx=[1 2 3 15 16 17 18];
 exp_idx=[7 8 9 21 22 23 24];
 spec_idx=[19 3 1 4 6 5 7 9 10 8 2]; %relative to "names" below
 AKAR4p_idx2=[NaN 30;3 20;1 16; 4 19; 6 21; 5 22;7 23;9 18; 10 17; NaN 8; NaN 2];
@@ -376,7 +325,6 @@ for j=1:nSpec
         if i<4 %Experiment 1-3 (small model)
              y_sims_sub=y_sims(:,:,spec_idx(j));
              if j==1
-                 %y_sims_sub=(y_sims_sub.*((fp-bl)/2))+bl;
                  y_sims_sub_n01=(y_sims_sub-sim_min)/(sim_max-sim_min);
                  y_sims_sub=y_sims_sub_n01*(fp-bl)+bl;
              end
@@ -384,17 +332,14 @@ for j=1:nSpec
             if ~isnan(AKAR4p_idx2(j,1)) %alfa and beta type, needs to be summed together 
                 y_sims_sub=y_sims(:,:,AKAR4p_idx2(j,1))+y_sims(:,:,AKAR4p_idx2(j,2));
                  if j==1
-                 %y_sims_sub=(y_sims_sub.*((fp-bl)/2))+bl;
-                 y_sims_sub_n01=(y_sims_sub-sim_min)/(sim_max-sim_min);
-                 y_sims_sub=y_sims_sub_n01*(fp-bl)+bl;
+                    y_sims_sub_n01=(y_sims_sub-sim_min)/(sim_max-sim_min);
+                    y_sims_sub=y_sims_sub_n01*(fp-bl)+bl;
                  end
         elseif isnan(AKAR4p_idx2(j,1)) %not alfa and beta, single type
-            %disp(AKAR4p_idx2(j,2))
                 y_sims_sub=y_sims(:,:,AKAR4p_idx2(j,2));
                  if j==1
-                 %y_sims_sub=(y_sims_sub.*((fp-bl)/2))+bl;
-                 y_sims_sub_n01=(y_sims_sub-sim_min)/(sim_max-sim_min);
-                 y_sims_sub=y_sims_sub_n01*(fp-bl)+bl;
+                    y_sims_sub_n01=(y_sims_sub-sim_min)/(sim_max-sim_min);
+                    y_sims_sub=y_sims_sub_n01*(fp-bl)+bl;
                  end
             end
         end

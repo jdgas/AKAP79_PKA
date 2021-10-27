@@ -1,6 +1,6 @@
 
 function class=plot_sims_all_species(sims_file, draws_file)
-close all;
+%close all;
 
 nWT=18;%Number of WT experiments
 nMut=6;%Number of mutation experiments
@@ -30,7 +30,6 @@ end
 
 L=load(sims_file);
 [nIt,~,nPar]=size(L.sims.output{1});
-%nIt=1000;
 AKAR4p_idx1=19; %AKAR4p idx in small model
 AKAR4p_idx2=30; %AKAR4p idx in extended model
 
@@ -59,12 +58,6 @@ scores = get_scores(Y_sims_n,Y_exp_n, bl,fp, bl, fp, nWT,nMut);
 scoresSum=sum(scores(1:24,:))./24;
 
 [mm,mIdx]=min(scoresSum);
-
-%class=find(scoresSum<0.004);
-%class=find(scoresSum<10);
-%class=find(scores<0.004);
-%class=class(1:10:end);
-
 
 class=false(1,nIt);
 for j=1:nIt
@@ -114,45 +107,5 @@ sgtitle('Modelling of responses at different cAMP levels')
 h=gcf;
 h.OuterPosition=[100 100 1000 3000];
 saveas(gcf,'./figures/best_score_simulations','png');
-
-
-
-specIdx=[1:10 12:14 17:19];
-
-%Get names of species
- S=sbioloadproject('../models/PKA_insee_05_06_20_AKAR');  %load model
- modelobj = S.m1;
-[~,~,names] = sbiosimulate(modelobj);
-
-% for j=1:12;
-% figure()
-% for i=1:length(specIdx)
-%     subplot(4,4,i)
-%     times=L.sims.times{j};
-%     Y=L.sims.output{j};
-%     p1=plot(times,Y(class(1:nth:end),:,specIdx(i)),'Color',[190 190 190]/255);
-%     hold on
-%     p2=plot(times,Y(mIdx,:,specIdx(i)),'Color',[150 0 0]/255,'LineWidth',3);
-%     title(names{specIdx(i)},'Interpreter','none')
-% end
-% legend([p1(1) p2],{ 'simulations', 'best score'},'Location','southeast')
-% sgtitle(['All species, experimental setting ' exp_name{j}] )
-% h=gcf;
-% h.OuterPosition=[100 100 1000 3000];
-% saveas(gcf,['./final_figures/all_species_exp' num2str(j)],'png');
-% end
-
-
-T=readtable('pkaParms_restri2.txt');%, 'Delimiter', ';');
-Data=load(draws_file);
-vals=Data.samples;
-figure();
-boxplot(log10(vals(class,:)),'Labels',T.Name);
-hold on
-plot(log10(T.Value),'o-r')
-h=gcf;
-h.OuterPosition=[100 100 1200 500];
-saveas(gcf,'./figures/parameterBoxPlot','png');
-
 
 end
