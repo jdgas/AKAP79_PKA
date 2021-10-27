@@ -16,16 +16,17 @@ Index:    Name:                              Value:
    15        kf_Rii_cAMPxC__Rii_C_cAMP          0.2984    
    16        kb_Rii_cAMPxC__Rii_C_cAMP          0.018  
    17        kf_Rii_C_cAMP__RiiP_C_cAMP         33
-   18        AKAPoff1			                2.6       
-   19        AKAPoff2			                0.226  #kf_RiiPxCaN__RiiP_CaN  
-   20        AKAPoff3			                20       
-   21        AKAPon1			                0.45     
-   22        AKAPon2			                2.33     
-   23        AKAPon3			                2         
+   18        AKAPoff1			        2.6       
+   19        AKAPoff2			        0.226    
+   20        AKAPoff3			        20       
+   21        AKAPon1			        0.45     
+   22        AKAPon2			        2.33     
+   23        AKAPon3			        2         
    24        kb_RiixC__Rii_C                    0.0003    
-   25        AKAR4				                0.018 #0.018025   
-   26	       AKAR4_C				              0.106 #0.111217         
-   27        AKAR4p				                10.2 #10
-   28	     kmOFF				                100
-   29	     kmON				                1
-   30        KD_T                               0.7          
+   25        AKAR4				0.018    
+   26	     AKAR4_C				0.106         
+   27        AKAR4p				10.2
+   28	     kmOFF				100
+   29	     kmON				1
+   30        KD_T                               0.7 
+           
