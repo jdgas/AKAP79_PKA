@@ -123,12 +123,6 @@ PKAModel <- function(t, state, parameters) {
   vf_[12] = (-reaction_44 - reaction_33 + reaction_48 + reaction_37)
   vf_[13] = (reaction_44 - reaction_48)
   vf_[14] = (reaction_33 - reaction_37)
-  vf_[15] = vf_[8] + vf_[4] + vf_[10] + vf_[6] + vf_[7];
-  vf_[16] = vf_[1] + vf_[9] + vf_[4] + vf_[10];
-  vf_[17] = vf_[3] + vf_[6] + vf_[5] + vf_[7];
-  vf_[18] = 0;
-  vf_[19] = 0;
-  vf_[20]; #b_AKAP value
   vf_[21] = -reaction_1;
   vf_[22] = reaction_1 - reaction_2;
   vf_[23] = reaction_2
