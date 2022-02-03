@@ -21,17 +21,17 @@ loadTargets_TSCC <- function(){
   
   #### Calibration Curves Unnormalized Data ####
   # Read txt file for CCurves
-  A <- read.csv('Targets/Calib_Curves.txt', sep='\t')
+  A <- read.csv('../Targets/Calib_Curves.txt', sep='\t')
   # Normalize data with constant 1.08
   #A[,c(2:7)] = A[,c(2:7)] / 1.08
   
   # Normalize data and re-assign it to 'C'
-  First = ( (A$X0.4 - 100 ) / ( 171.67 - 100 ) ) * 0.2  ;
-  Second = ( (A$X0.2 - 100 ) / ( 171.67 - 100 ) ) * 0.2  ;
-  Third = ( (A$X0.1 - 100 ) / ( 171.67 - 100 ) ) * 0.2  ;
-  Fourth = ( (A$X0.05 - 100 ) / ( 171.67 - 100 ) ) * 0.2  ;
-  Fith = ( (A$X0.025 - 100 ) / ( 171.67 - 100 ) ) * 0.2  ;
-  Sixth = ( (A$X0 - 100 ) / ( 171.67 - 100 ) ) * 0.2  ;
+  First = ( (A$C0.4 - 100 ) / ( 171.67 - 100 ) ) * 0.2  ;
+  Second = ( (A$C0.2 - 100 ) / ( 171.67 - 100 ) ) * 0.2  ;
+  Third = ( (A$C0.1 - 100 ) / ( 171.67 - 100 ) ) * 0.2  ;
+  Fourth = ( (A$C0.05 - 100 ) / ( 171.67 - 100 ) ) * 0.2  ;
+  Fith = ( (A$C0.025 - 100 ) / ( 171.67 - 100 ) ) * 0.2  ;
+  Sixth = ( (A$C0 - 100 ) / ( 171.67 - 100 ) ) * 0.2  ;
   normAKAR = cbind(A$Time, First, Second, Third, Fourth, Fith, Sixth);
   colnames(normAKAR) = c("Time", "0.4C", "0.2C", "0.1C", "0.05C", "0.025C", "0C");
   A = as.data.frame(normAKAR);
@@ -59,7 +59,7 @@ loadTargets_TSCC <- function(){
   
   #### Time-Series Normalized Data ####
   # Read txt file for 0uM cAMP
-  B <- read.csv('Targets/TS_0cAMP.txt', sep='\t');
+  B <- read.csv('../Targets/0_cAMP.txt', sep='\t');
   # Normalize data with constant 1.08
   #B[,c(2:4)] = B[,c(2:4)] / 1.08
   
@@ -84,7 +84,7 @@ loadTargets_TSCC <- function(){
   
   
   # Read txt file for 0.1uM cAMP
-  C <- read.csv('Targets/TS_01cAMP.txt', sep='\t');
+  C <- read.csv('../Targets/0.1_cAMP.txt', sep='\t');
   # Normalize data with constant 1.08
   #C[,c(2:4)] = C[,c(2:4)] / 1.08
  
@@ -108,7 +108,7 @@ loadTargets_TSCC <- function(){
   
  
   # Read txt file for 0.2uM cAMP
-  D <- read.csv('Targets/TS_02cAMP.txt', sep='\t');
+  D <- read.csv('../Targets/0.2_cAMP.txt', sep='\t');
   # Normalize data with constant 1.08
   #D[,c(2:4)] = D[,c(2:4)] / 1.08
  
@@ -132,7 +132,7 @@ loadTargets_TSCC <- function(){
   
   
   # Read txt file for 0.5uM cAMP
-  E <- read.csv('Targets/TS_05cAMP.txt', sep='\t');
+  E <- read.csv('../Targets/0.5_cAMP.txt', sep='\t');
   # Normalize data with constant 1.08
   #E[,c(2:4)] = E[,c(2:4)] / 1.08
   
@@ -157,7 +157,7 @@ loadTargets_TSCC <- function(){
   
   #### Time-Series Unnormalized Data ####
   # Read txt file for 1uM cAMP
-  G <- read.csv('Targets/TS_1cAMP.txt', sep='\t');
+  G <- read.csv('../Targets/1_cAMP.txt', sep='\t');
   # Normalize data with constant 1.08
   #G[,c(2:4)] = G[,c(2:4)] / 1.08
   
@@ -181,7 +181,7 @@ loadTargets_TSCC <- function(){
   
   
   # Read txt file for 2uM cAMP
-  H <- read.csv('Targets/TS_2cAMP.txt', sep='\t')
+  H <- read.csv('../Targets/2_cAMP.txt', sep='\t')
   # Normalize data with constant 1.08
   #H[,c(2:4)] = H[,c(2:4)] / 1.08
   
