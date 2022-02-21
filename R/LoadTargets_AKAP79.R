@@ -22,8 +22,7 @@ loadTargets_TSCC <- function(){
   #### Calibration Curves Unnormalized Data ####
   # Read txt file for CCurves
   A <- read.csv('../Targets/Calib_Curves.txt', sep='\t')
-  # Normalize data with constant 1.08
-  #A[,c(2:7)] = A[,c(2:7)] / 1.08
+
   
   # Normalize data and re-assign it to 'C'
   First = ( (A$C0.4 - 100 ) / ( 171.67 - 100 ) ) * 0.2  ;
@@ -60,8 +59,7 @@ loadTargets_TSCC <- function(){
   #### Time-Series Normalized Data ####
   # Read txt file for 0uM cAMP
   B <- read.csv('../Targets/0_cAMP.txt', sep='\t');
-  # Normalize data with constant 1.08
-  #B[,c(2:4)] = B[,c(2:4)] / 1.08
+
   
   # Normalize data between 0 and 1
   First = ((B$NoCaNnoAKAP - 100) / ( 171.67 - 100)) * 0.2 ;
@@ -85,8 +83,7 @@ loadTargets_TSCC <- function(){
   
   # Read txt file for 0.1uM cAMP
   C <- read.csv('../Targets/0.1_cAMP.txt', sep='\t');
-  # Normalize data with constant 1.08
-  #C[,c(2:4)] = C[,c(2:4)] / 1.08
+
  
   First = ((C$NoCaNnoAKAP - 100) / ( 171.67 - 97)) * 0.2 ;
   Second = ((C$CaNonly - 100) / ( 171.67 - 97)) * 0.2 ;
@@ -109,8 +106,7 @@ loadTargets_TSCC <- function(){
  
   # Read txt file for 0.2uM cAMP
   D <- read.csv('../Targets/0.2_cAMP.txt', sep='\t');
-  # Normalize data with constant 1.08
-  #D[,c(2:4)] = D[,c(2:4)] / 1.08
+
  
   First = ((D$NoCaNnoAKAP - 100) / ( 171.67 - 100)) * 0.2 ;
   Second = ((D$CaNonly - 100) / ( 171.67 - 100)) * 0.2 ;
@@ -133,8 +129,7 @@ loadTargets_TSCC <- function(){
   
   # Read txt file for 0.5uM cAMP
   E <- read.csv('../Targets/0.5_cAMP.txt', sep='\t');
-  # Normalize data with constant 1.08
-  #E[,c(2:4)] = E[,c(2:4)] / 1.08
+
   
   First = ((E$NoCaNnoAKAP - 100) / ( 171.67 - 100)) * 0.2 ;
   Second = ((E$CaNonly - 100) / ( 171.67 - 100)) * 0.2 ;
@@ -158,8 +153,7 @@ loadTargets_TSCC <- function(){
   #### Time-Series Unnormalized Data ####
   # Read txt file for 1uM cAMP
   G <- read.csv('../Targets/1_cAMP.txt', sep='\t');
-  # Normalize data with constant 1.08
-  #G[,c(2:4)] = G[,c(2:4)] / 1.08
+
   
   First = ((G$NoCaNnoAKAP - 100) / ( 171.67 - 100)) * 0.2 ;
   Second = ((G$CaNonly - 100) / ( 171.67 - 100)) * 0.2 ;
@@ -182,8 +176,7 @@ loadTargets_TSCC <- function(){
   
   # Read txt file for 2uM cAMP
   H <- read.csv('../Targets/2_cAMP.txt', sep='\t')
-  # Normalize data with constant 1.08
-  #H[,c(2:4)] = H[,c(2:4)] / 1.08
+
   
   First = ((H$NoCaNnoAKAP - 100) / ( 171.67 - 100)) * 0.2  ;
   Second = ((H$CaNonly - 100 ) / ( 171.67 - 100 )) * 0.2  ;
