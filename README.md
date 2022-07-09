@@ -1,5 +1,8 @@
 # Aproximate Bayesian Computing (ABC) for parameter estimation in the AKAP79-PKA model
 
+**Please note** that the the continuous development of the code for Uncertainty Quantification (ABC) and Sensitivity Analysis is now taking place at https://github.com/icpm-kth/uqsa . 
+
+
 This repository (https://github.com/jdgas/AKAP79_PKA) contains source code to the publication
 ```
 Church, Timothy W., Parul Tewatia, Saad Hannan, João Antunes, Olivia Eriksson, Trevor G. Smart, 
@@ -15,9 +18,10 @@ applied to dynamical intracellular pathway models." Bioinformatics 35, no. 2 (20
 ````
 
 and the corresponding code repository:
-https://github.com/alexjau/uqsa
+https://github.com/alexjau/uqsa (now beeing continuosly developed at https://github.com/icpm-kth/uqsa).
 
-This repository is under construction and contain the following subfolders:
+
+The https://github.com/jdgas/AKAP79_PKA repository is under construction and contain the following subfolders:
 - **Matlab**, code for reproducing figures in matlab.
 - **Models**, the small and extended model in Matlabs Simbiology format. Five different parameter sets that fit data will be included.
 - **Posterior distribution**, the sampled parameter set fitting the experimental data. 
